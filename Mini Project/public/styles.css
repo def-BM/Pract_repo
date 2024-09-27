@@ -1,0 +1,284 @@
+*{
+    margin: 0;
+    font-family: Arial, sans-serif;;
+    box-sizing: border-box;
+}
+/* Header decoration */
+.header{
+    padding: 10px;
+    height: 10vh;
+    width: 100vw;
+    background-color: #6f189e;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo{
+    background-image: url(src/logo.png);
+    background-size: cover;
+    height: 55px;
+    width: 150px;
+    /* left: 0; */
+}
+
+.navbar{
+    background-color: transparent;
+    z-index: 1000;
+    position: relative;
+}
+
+.navbar ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.navbar ul li {
+    position: relative;
+}
+
+.navbar ul li a{
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+} 
+
+.navbar .fa-caret-down{
+    padding: 5px;
+}
+
+.navbar ul li a:hover{
+    background: blue;
+}
+
+
+.navbar ul li ul.submenu{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #6f189e;
+    padding: 0;
+    margin: 0;
+    z-index: 9999;
+}
+
+.navbar ul li:hover > .submenu{
+    display: block;
+}
+
+.navbar ul li ul.submenu li{
+    position: relative;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.navbar ul li ul.submenu li:hover{
+    background: blue;
+}
+
+.navbar ul li ul.submenu li ul{
+    border: 1px solid white;
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #6f189e;
+    z-index: 9999;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li ul.submenu li:hover > .user-menu{
+    display: block;
+}
+
+.navbar ul li ul.submenu li:hover > .owner-menu{
+    display: block;
+}
+
+.navbar ul li ul.submenu li:hover > ul{
+    display: block;
+}
+
+.navbar ul li ul.submenu li ul li{
+    width: 200px;
+}
+
+.navbar ul li ul.submenu li ul li a{
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    text-align: left;
+}
+
+.navbar ul li ul.submenu li ul li a:hover{
+    background: blue;
+}
+
+/* Main body */
+.image{
+    background-image: url(src/i1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100vw;
+    height: 50vh;
+}
+
+.image h1{
+    text-align: center;
+    color: rgb(249, 62, 199);
+    font-size: 5vw;
+    padding-top: 100px;
+}
+
+.item-box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 0 10px;
+    width: 100vw;
+    background-color: #8d7fd4;
+}
+
+.box{
+    margin: 10px 0;
+    border: 2px solid black;
+    height: 30vh;
+    width: calc(50%- 20px);
+    background-color: white;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.box:hover{
+    border: 3px solid black;
+}
+
+.box-image{
+    height: 75%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+
+.box-image .rating{
+    font-size: 20px;
+    display: flex;
+    gap: 5px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.box-image .checked{
+    color: orange;
+}
+
+.location{
+    display: flex;
+    align-items: center;
+    font-size: medium;
+}
+
+.location i{
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+.location p{
+    margin: 0;
+    margin-right: 25px;
+}
+
+.food {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.veg, .non-veg{
+    width: 24px;
+    height: auto;
+    margin-right: 5px;
+}
+
+.location .fa-user-group{
+    margin-left: 20px;
+}
+
+/* footer bar */
+.foot{
+    background-color: #0f1111;
+    color: white;
+    text-align: center;
+    padding: 3vh;
+    height:auto;
+    width: 100vw;
+    /* position: fixed; */
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar ul li a {
+        font-size: 14px; /* Adjust font size for smaller screens */
+        padding: 8px 12px;
+    }
+
+    .box {
+        width: calc(100% - 20px); /* Adjust width for mobile screens */
+    }
+
+    .image h1 {
+        font-size: 6vw; /* Adjust font size for mobile screens */
+    }
+
+    .navbar ul li ul.submenu li {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        height: auto;
+        padding: 5px;
+    }
+
+    .logo {
+        height: 40px;
+        width: 120px;
+    }
+
+    .button {
+        width: auto; /* Adjust button width for smaller screens */
+    }
+
+    .navbar ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .box {
+        width: calc(100% - 20px); /* Adjust width for very small screens */
+    }
+
+    .image h1 {
+        font-size: 7vw; /* Further adjust font size for very small screens */
+    }
+}

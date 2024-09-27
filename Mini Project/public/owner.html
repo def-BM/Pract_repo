@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="src/icon.png" type="image/x-icon">
+    <title>Eventura</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url("src/i3.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .user-form{
+            width: 700px;
+            background-color: blueviolet;
+            color: white;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+        }
+
+        .user-form h2{
+            font-size: 36px;
+            text-align: center;
+        }
+
+        .form-grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .input-box{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-box1{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-box p{
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .input-box input[type="text"],
+        .input-box input[type="tel"],
+        .input-box input[type="email"],
+        .input-box input[type="password"]{
+            border: none;
+            border-radius: 5px;
+            padding:10px;
+            margin-bottom: 15px;
+        }
+
+        .input-box input[type="radio"]{
+            margin-right: 5px;
+        }
+
+        .input-box #opt{
+            width: 40%;
+            height: 30px;
+            border-radius: 10px;
+        }
+
+        .input-box input:hover{
+            border: 2px solid black;
+        }
+
+        .btn-container{
+            grid-column: span 2;
+            display: flex;
+            justify-content: center;
+            /* align-items: center; */
+        }
+
+        #create-btn{
+            /* align-items: center; */
+            width: 50%;
+            height: 45px;
+            margin: 40px;
+            background-color: white;
+            border: none;
+            outline: none;
+            border-radius: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-size: 18px;
+            color:#333;
+            font-weight: 600;
+        }
+
+        #create-btn:hover{
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="user-form">
+        <h2>Register</h2>
+        
+        <form action="/owner-signup" method="POST" class="user">
+            <div class="form-grid">
+                <div class="input-box">
+                    <label for="name">Owner name</label>
+                    <input type="text" name="name" placeholder="Full Name" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="contact">Mobile no.</label>
+                    <input type="tel" name="contact" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="email">email (*use as username.)</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="venue name">Venue Name</label>
+                    <input type="text" name="venueName" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="venueLocation">Venue Location</label>
+                    <input type="text" name="venueLocation" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="venueCapacity">Venue Capacity</label>
+                    <input type="text" name="venueCapacity" required>
+                </div>
+                
+                <div class="input-box">
+                    <div class="input-box1">
+                        <label for="venueType">Venue Type</label>
+                        <select id="opt" name="venueType" required>
+                            <option>Venue Type</option>
+                            <option>Hall</option>
+                            <option>Restaurant</option>
+                        </select>
+                    </div>
+
+                    <div class="input-box1">
+                        <label for="ocassion">Ocassion Type</label>
+                        <select id="opt" name="ocassion" required>
+                            <option>Ocassion type</option>
+                            <option>All</option>
+                            <option>Wedding</option>
+                            <option>Party</option>
+                            <option >Ceremony</option>
+                            <option>Meeting</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-box">
+                    <label for="service">Is catering services available?</label>
+                    <input type="radio" id="catering-yes" name="catering" value="yes" required>
+                    <label for="catering-yes">Yes</label>
+                    <input type="radio" id="catering-no" name="catering" value="no">
+                    <label for="catering-no">No</label>
+                </div>
+
+                <div class="input-box" id="food-options" style="display: none; margin-top: 10px;">
+                    <label for="">Select the type of food:</label>
+                    <input type="radio" id="food-veg" name="food" value="veg">
+                    <label for="food-veg">Veg</label>
+                    <input type="radio" id="food-nonveg" name="food" value="nonveg">
+                    <label for="food-nonveg">Non-Veg</label>
+                </div>
+
+
+                <div class="input-box">
+                    <label for="password">Create Password</label>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="Confirm_password">Confirm Password</label>
+                    <input type="password" name="Confirm_password" placeholder="Confirm Password" required>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" id="create-btn">Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+
+        // Get the catering radio buttons
+        const cateringYes = document.getElementById('catering-yes');
+        const cateringNo = document.getElementById('catering-no');
+        const foodOptions = document.getElementById('food-options');
+
+        // Add event listeners to toggle food options visibility
+        cateringYes.addEventListener('change', function() {
+            if (cateringYes.checked) {
+                foodOptions.style.display = 'block'; // Show food options
+            }
+        });
+
+        cateringNo.addEventListener('change', function() {
+            if (cateringNo.checked) {
+                foodOptions.style.display = 'none'; // Hide food options
+            }
+        });
+
+    </script>
+</body>
+</html>
