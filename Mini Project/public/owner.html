@@ -82,6 +82,26 @@
             border: 2px solid black;
         }
 
+        #food-options {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        #food-options label {
+            margin-right: 20px;
+        }
+
+        #food-options input[type="radio"] {
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+
         .btn-container{
             grid-column: span 2;
             display: flex;
@@ -114,7 +134,7 @@
     <div class="user-form">
         <h2>Register</h2>
         
-        <form action="/owner-signup" method="POST" class="user">
+        <form id="ownerSignupForm" action="/owner-signup" method="POST" class="user">
             <div class="form-grid">
                 <div class="input-box">
                     <label for="name">Owner name</label>
@@ -123,7 +143,7 @@
 
                 <div class="input-box">
                     <label for="contact">Mobile no.</label>
-                    <input type="tel" name="contact" required>
+                    <input type="tel" name="contact" required maxlength="10">
                 </div>
 
                 <div class="input-box">
@@ -177,23 +197,25 @@
                     <label for="catering-no">No</label>
                 </div>
 
-                <div class="input-box" id="food-options" style="display: none; margin-top: 10px;">
+                <div id="food-options" style="display: none;">
                     <label for="">Select the type of food:</label>
                     <input type="radio" id="food-veg" name="food" value="veg">
                     <label for="food-veg">Veg</label>
                     <input type="radio" id="food-nonveg" name="food" value="nonveg">
                     <label for="food-nonveg">Non-Veg</label>
+                    <input type="radio" id="food-both" name="food" value="both">
+                    <label for="food-both">Both</label>
                 </div>
 
 
                 <div class="input-box">
                     <label for="password">Create Password</label>
-                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="password" placeholder="Password" required minlength="8">
                 </div>
 
                 <div class="input-box">
                     <label for="Confirm_password">Confirm Password</label>
-                    <input type="password" name="Confirm_password" placeholder="Confirm Password" required>
+                    <input type="password" name="Confirm_password" placeholder="Confirm Password" required minlength="8">
                 </div>
 
                 <div class="btn-container">
@@ -208,6 +230,7 @@
         // Get the catering radio buttons
         const cateringYes = document.getElementById('catering-yes');
         const cateringNo = document.getElementById('catering-no');
+        const cateringBoth = document.getElementById('catering-both')
         const foodOptions = document.getElementById('food-options');
 
         // Add event listeners to toggle food options visibility
@@ -221,6 +244,29 @@
             if (cateringNo.checked) {
                 foodOptions.style.display = 'none'; // Hide food options
             }
+        });
+
+        
+        document.getElementById('ownerSignupForm').addEventListener('submit', function(e) {
+            const password = document.querySelector('input[name="password"]').value;
+            const confirmPassword = document.querySelector('input[name="Confirm_password"]').value;
+
+            // Check if password has at least 8 characters
+            if (password.length < 8) {
+                e.preventDefault();  // Prevent form submission
+                alert('Password must be at least 8 characters long.');
+                return;
+            }
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                e.preventDefault();  // Prevent form submission
+                alert('Passwords do not match.');
+                return;
+            }
+
+            // Clear the form fields after submission
+            document.getElementById('ownerSignupForm').reset();
         });
 
     </script>

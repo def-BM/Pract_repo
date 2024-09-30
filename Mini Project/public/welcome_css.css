@@ -1,0 +1,226 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html, body {
+    height: 100%; /* Change made: Set html and body height to 100% */
+}
+
+body {
+    display: flex; /* Change made: Enable flexbox on body */
+    flex-direction: column; /* Change made: Stack children vertically */
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.header{
+    padding: 10px;
+    height: 10vh;
+    width: 100vw;
+    background-color: #0f1111;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo{
+    background-image: url(src/logo.png);
+    background-size: cover;
+    height: 55px;
+    width: 150px;
+    /* left: 0; */
+}
+
+.navbar{
+    background-color: transparent;
+    z-index: 1000;
+    position: relative;
+}
+
+.navbar ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.navbar ul li {
+    position: relative;
+}
+
+.navbar ul li a{
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+} 
+
+.navbar .fa-caret-down{
+    padding: 5px;
+}
+
+.navbar ul li a:hover{
+    background: blue;
+    border-radius: 5px;
+}
+
+
+.navbar ul li ul.submenu{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #008080;
+    padding: 0;
+    margin: 0;
+    z-index: 9999;
+}
+
+.navbar ul li:hover > .submenu{
+    display: block;
+}
+
+.navbar ul li ul.submenu li{
+    position: relative;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.navbar ul li ul.submenu li:hover{
+    background: blue;
+    border-radius: 10px;
+}
+
+.navbar ul li ul.submenu li ul{
+    border: 1px solid white;
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #008080;
+    z-index: 9999;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li ul.submenu li:hover > .user-menu{
+    display: block;
+}
+
+.navbar ul li ul.submenu li:hover > .owner-menu{
+    display: block;
+}
+
+.navbar ul li ul.submenu li:hover > ul{
+    display: block;
+}
+
+.navbar ul li ul.submenu li ul li{
+    width: 200px;
+}
+
+.navbar ul li ul.submenu li ul li a{
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    text-align: left;
+}
+
+.navbar ul li ul.submenu li ul li a:hover{
+    background: blue;
+}
+
+
+/* Main Section */
+main {
+    flex: 1; /* Change made: Allow main to grow and fill remaining height */
+    display: flex; /* Change made: Enable flexbox for centering */
+    justify-content: center; /* Change made: Center horizontally */
+    align-items: center; /* Change made: Center vertically */
+}
+
+.welcome-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: white;
+    margin: 20px auto;
+    max-width: 900px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 100%;
+}
+
+.welcome-section h1 {
+    font-size: 48px;
+    color: #ff6f61;
+    margin-bottom: 20px;
+}
+
+.welcome-section h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.welcome-section p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.welcome-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.action-btn {
+    padding: 12px 25px;
+    background-color: #ff6f61;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background 0.3s ease;
+}
+
+.action-btn:hover {
+    background-color: #e65a50;
+}
+
+/* Footer */
+.foot{
+    background-color: #0f1111;
+    color: white;
+    text-align: center;
+    padding: 3vh;
+    height:auto;
+    width: 100vw;
+}
+footer p {
+    font-size: 14px;
+}
+
+.foot-cont {
+    margin-bottom: 20px;
+}
+
+.foot-cont h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.foot-cont p {
+    font-size: 16px;
+}
+
