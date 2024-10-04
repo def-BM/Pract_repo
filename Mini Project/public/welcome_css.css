@@ -144,10 +144,11 @@ body {
 
 /* Main Section */
 main {
-    flex: 1; /* Change made: Allow main to grow and fill remaining height */
-    display: flex; /* Change made: Enable flexbox for centering */
-    justify-content: center; /* Change made: Center horizontally */
-    align-items: center; /* Change made: Center vertically */
+    flex: 1; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background-image: url(src/i5.jpg);
 }
 
 .welcome-section {
@@ -187,15 +188,18 @@ main {
 
 .action-btn {
     padding: 12px 25px;
-    background-color: #ff6f61;
+    background-color: rgb(95, 191, 11);
+    color: white;
     border: none;
     border-radius: 5px;
     font-size: 18px;
     transition: background 0.3s ease;
+    text-decoration: none;
 }
 
 .action-btn:hover {
-    background-color: #e65a50;
+    border: 2px solid rgb(95, 191, 11) ;
+    /* background-color: rgb(95, 191, 11); */
 }
 
 /* Footer */

@@ -23,28 +23,28 @@ document.addEventListener("DOMContentLoaded", function () {
             // Navigate to the corresponding page based on the index
             switch (index) {
                 case 0:
-                    window.location.href = 'detail.html';
+                    window.location.href = 'venues.html';
                     break;
                 case 1:
-                    window.location.href = 'detail.html';
+                    window.location.href = 'venues.html';
                     break;
                 case 2:
-                    window.location.href = 'detail.html';
+                    window.location.href = 'venues.html';
                     break;
                 case 3:
-                    window.location.href = 'detail.html';
+                    window.location.href = 'venues.html';
                     break;
                 case 4:
-                    window.location.href = 'detail.html';
+                    window.location.href = 'venues.html';
                     break;
                 case 5:
-                    window.location.href = 'detail.html';
+                    window.location.href = 'venues.html';
                     break;
                 case 6:
-                    window.location.href = 'detail.html';
+                    window.location.href = 'venues.html';
                     break;
                 case 7:
-                    window.location.href = 'detail.html';
+                    window.location.href = 'venues.html';
                     break;
                 case 8:
                     window.location.href = 'detail.html';
@@ -55,3 +55,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+

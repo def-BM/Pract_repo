@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="icon" href="src/icon.png" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="welcome_css.css"> -->
+    <title>Eventura</title>
+</head>
+<style>
+    /* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html, body {
+    height: 100%; /* Change made: Set html and body height to 100% */
+}
+
+body {
+    display: flex; /* Change made: Enable flexbox on body */
+    flex-direction: column; /* Change made: Stack children vertically */
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.header{
+    padding: 10px;
+    height: 10vh;
+    width: 100vw;
+    background-color: #0f1111;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo{
+    background-image: url(src/logo.png);
+    background-size: cover;
+    height: 55px;
+    width: 150px;
+    /* left: 0; */
+}
+
+.navbar{
+    background-color: transparent;
+    z-index: 1000;
+    position: relative;
+}
+
+.navbar ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.navbar ul li {
+    position: relative;
+}
+
+.navbar ul li a{
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+} 
+
+.navbar .fa-caret-down{
+    padding: 5px;
+}
+
+.navbar ul li a:hover{
+    background: blue;
+    border-radius: 5px;
+}
+
+
+.navbar ul li ul.submenu{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #008080;
+    padding: 0;
+    margin: 0;
+    z-index: 9999;
+}
+
+.navbar ul li:hover > .submenu{
+    display: block;
+}
+
+.navbar ul li ul.submenu li{
+    position: relative;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.navbar ul li ul.submenu li:hover{
+    background: blue;
+    border-radius: 10px;
+}
+
+.navbar ul li ul.submenu li ul{
+    border: 1px solid white;
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #008080;
+    z-index: 9999;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li ul.submenu li:hover > .user-menu{
+    display: block;
+}
+
+.navbar ul li ul.submenu li:hover > .owner-menu{
+    display: block;
+}
+
+.navbar ul li ul.submenu li:hover > ul{
+    display: block;
+}
+
+.navbar ul li ul.submenu li ul li{
+    width: 200px;
+}
+
+.navbar ul li ul.submenu li ul li a{
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    text-align: left;
+}
+
+.navbar ul li ul.submenu li ul li a:hover{
+    background: blue;
+}
+
+main {
+    flex: 1; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    /* background-image: url(src/i5.jpg); */
+}
+
+.item-box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 0 10px;
+    width: 100vw;
+    height:100%;
+    background-color: #8d7fd4;
+}
+
+.box{
+    margin: 20px 0;
+    border: 2px solid black;
+    height: 40vh;
+    width:100%;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+/* Footer */
+.foot{
+    background-color: #0f1111;
+    color: white;
+    text-align: center;
+    padding: 3vh;
+    height:auto;
+    width: 100vw;
+}
+footer p {
+    font-size: 14px;
+}
+
+.foot-cont {
+    margin-bottom: 20px;
+}
+
+.foot-cont h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.foot-cont p {
+    font-size: 16px;
+}
+</style>
+<body>
+    <header></header>
+        <div class="header">
+            <div class="logo"></div>
+            <div class="navbar">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">My Bookings</a></li>
+                        <li><a href="#contact">Contact us</a></li>
+                        <li><a href="#">Log Out</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="item-box" id="venueContainer"></div>
+        
+    </main>
+
+    <footer>
+        <div class="foot">
+            <div class="foot-cont" id="contact">
+                <h2>Contact us</h2>
+                <p>For inquiries or support, email us at support@eventura.com</p>
+            </div>
+            <p>Copyright &copy; all rights are reserved by Eventura.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fetch venue data from the server
+        async function fetchVenues() {
+            try {
+                const response = await fetch('/venues');
+                if (!response.ok) throw new Error('Failed to fetch venues');
+
+                const venues = await response.json();
+                const venueContainer = document.getElementById('venueContainer');
+
+                // Clear previous content
+                venueContainer.innerHTML = '';
+
+                // Dynamically create venue boxes
+                venues.forEach(venue => {
+                    const box = document.createElement('div');
+                    box.className = 'box';
+                    box.innerHTML = `
+                        <h3>${venue.venueName}</h3>
+                        <p>Location: ${venue.venueLocation}</p>
+                        <p>Capacity: ${venue.venueCapacity}</p>
+                        <p>Type: ${venue.venueType}</p>
+                        <p>Contact: ${venue.contact}</p>
+                    `;
+                    venueContainer.appendChild(box);
+                });
+            } catch (error) {
+                console.error('Error fetching venues:', error);
+            }
+        }
+
+        // Call the fetch function when the page loads
+        window.onload = fetchVenues;
+    </script>
+</body>
+</html>

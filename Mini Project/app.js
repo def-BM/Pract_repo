@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+// const session = require('express-session');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
 const app = express();
@@ -106,16 +107,12 @@ app.post('/signin', async (req, res) => {
         }
         
         // If the password matches, redirect to welcome page
-        res.send(`
-            <script>
-                alert('Sign in successful!');
-                window.location.href = '/welcome';
-            </script>
-        `);
+         // Pass the user's name to the welcome page
+         return res.redirect(`/welcome?name=${encodeURIComponent(user.name)}`);
 
     } catch (err) {
         console.error(err);
-        res.status(500).send(`
+        return res.status(500).send(`
             <script>
                 alert('Error on the server.');
                 window.history.back();
@@ -126,7 +123,8 @@ app.post('/signin', async (req, res) => {
 
 // Serve the welcome page
 app.get('/welcome', (req, res) => {
-    res.sendFile(__dirname + '/public/welcome.html');
+    const userName = req.query.name || 'Guest'; // Default to 'Guest' if no name is passed
+    res.sendFile(__dirname + '/public/welcome.html', { userName});
 });
 
 
@@ -150,7 +148,7 @@ const Owner = mongoose.model('Owner', OwnerSchema);
 
 // Owner Signup Route
 app.post('/owner-signup', async (req, res) => {
-    // console.log('Request Body:', req.body); // Debug: Log request body to console
+    console.log( req.body); 
 
     const { name, email, contact, venueName, venueLocation, venueCapacity, venueType, catering, occasionType, password } = req.body;
 
@@ -191,44 +189,72 @@ app.post('/owner-signup', async (req, res) => {
     }
 });
 
+// Serve Owner Login Page
+app.get('/owner-login', (req, res) => {
+    res.sendFile(__dirname + '/public/owner_login.html');
+});
 
 // Owner Login Route
-app.post('/owner/login', async (req, res) => {
+app.post('/owner-login', async (req, res) => {
     const { email, password } = req.body;
-
-    // Check for required fields
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Email and password are required.' });
-    }
 
     try {
         // Find the owner by email
         const owner = await Owner.findOne({ email });
-
+        
         if (!owner) {
-            return res.status(404).json({ message: "No owner found with this email." });
+            return res.send(`
+                <script>
+                    alert('No owner found.');
+                    window.history.back();
+                </script>
+            `);
         }
-
+        
         // Compare the provided password with the stored hashed password
         const isMatch = await bcrypt.compare(password, owner.password);
-
+        
         if (!isMatch) {
-            return res.status(401).json({ message: "Invalid password." });
+            return res.send(`
+                <script>
+                    alert('Invalid password.');
+                    window.history.back();
+                </script>
+            `);
         }
+        
+        // If the password matches, redirect to the owner's dashboard or detail page
+        // If the password matches, redirect to the owner's detail page
+        return res.redirect(`/detail.html?name=${encodeURIComponent(owner.name)}&venueName=${encodeURIComponent(owner.venueName)}`);
 
-        // If the password matches, redirect to the owner's dashboard
-        res.json({
-            message: "Login successful!",
-            redirectUrl: '/detail.html' // Owner dashboard or detail page
-        });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: "Error on the server: " + err.message });
+        res.status(500).send(`
+            <script>
+                alert('Error on the server.');
+                window.history.back();
+            </script>
+        `);
     }
 });
 
+// Serve the owner detail page
+app.get('/detail.html', (req, res) => {
+    const userName = req.query.name || 'Guest';
+    const venueName = req.query.venueName || 'No Venue';
+    res.sendFile(__dirname + '/public/detail.html');
+});
 
-
+// Route to get venue information
+app.get('/venues', async (req, res) => {
+    try {
+        const venues = await Owner.find({}); // Fetch all owners (or filter based on requirements)
+        res.json(venues); // Send the venues data as JSON
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching venue data');
+    }
+});
 
 // Start the server
 app.listen(PORT, () => {

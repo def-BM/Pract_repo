@@ -34,7 +34,7 @@
                         </li>
                         <li><a href="#">My Bookings</a></li>
                         <li><a href="#contact">Contact us</a></li>
-                        <li><a href="logout.html">Log Out</a></li>
+                        <li><a href="#">Log Out</a></li>
                     </ul>
                 </nav>
             </div>
@@ -44,10 +44,10 @@
     <main>
         <section class="welcome-section">
             <h1>Welcome to Eventura!</h1>
-            <h2>Hello, [User Name]!</h2>
+            <h2>Hello, <span id="user-name">[User Name]</span>!</h2>
             <p>We are excited to have you here. Explore our platform to find and book amazing venues for your events.</p>
             <div class="welcome-actions">
-                <a href="#" class="action-btn">Find Venues</a>
+                <a href="venues.html" class="action-btn">Find Venues</a>
                 <a href="#" class="action-btn">View Your Bookings</a>
             </div>
         </section>
@@ -62,5 +62,14 @@
             <p>Copyright &copy; all rights are reserved by Eventura.com</p>
         </div>
     </footer>
+    <script>
+        // Get the user's name from the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('name') || 'Guest'; // Default to 'Guest' if no name is provided
+
+        // Display the user's name in the welcome message
+        document.getElementById('user-name').textContent = userName;
+    </script>
+
 </body>
 </html>

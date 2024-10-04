@@ -231,6 +231,23 @@
     /* position: fixed; */
 }
 
+footer p {
+    font-size: 14px;
+}
+
+.foot-cont {
+    margin-bottom: 20px;
+}
+
+.foot-cont h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.foot-cont p {
+    font-size: 16px;
+}
+
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
     .navbar ul {

@@ -5,9 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="icon" href="src/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="welcome_css.css"> <!-- Link to your CSS file -->
     <title>Eventura</title>
 </head>
 <body>
-    <h1>Welcome !</h1>
+    <header>
+        <div class="header">
+            <div class="logo"></div>
+            <div class="navbar">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Services <i class="fa-solid fa-caret-down"></i></a>
+                            <ul class="submenu">
+                                <li>User <i class="fa-solid fa-angle-right"></i>
+                                    <ul class="user-menu">
+                                        <li><a href="#">Find Venue</a></li>
+                                        <li><a href="#">Book Venue</a></li>
+                                    </ul>
+                                </li>
+                                <li>Owner <i class="fa-solid fa-angle-right"></i>
+                                    <ul class="owner-menu">
+                                        <li><a href="#">Update Booking</a></li>
+                                        <li><a href="#">Register Venue</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="#">My Bookings</a></li>
+                        <li><a href="#contact">Contact us</a></li>
+                        <li><a href="#">Log Out</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="welcome-section">
+            <h1>Welcome, <span id="owner-name">[Owner Name]</span>!</h1>
+            <h2 style="color: orangered;">Venue Name: <span id="venue-name">[Venue Name]</span></h2>
+            <p>Here you can manage your venues and bookings.</p>
+            <div class="welcome-actions">
+                <a href="#" class="action-btn">Find Venues</a>
+                <a href="#" class="action-btn">View Your Bookings</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="foot">
+            <div class="foot-cont" id="contact">
+                <h2>Contact us</h2>
+                <p>For inquiries or support, email us at support@eventura.com</p>
+            </div>
+            <p>Copyright &copy; all rights are reserved by Eventura.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // Get the owner's name from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const ownerName = urlParams.get('name') || 'Owner';
+        const venueName = urlParams.get('venueName') || 'No Venue';
+
+        // Display the owner's name
+        document.getElementById('owner-name').textContent = ownerName;
+        document.getElementById('venue-name').textContent = venueName;
+    </script>
 </body>
 </html>
