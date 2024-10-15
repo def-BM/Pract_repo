@@ -16,23 +16,6 @@
                 <nav>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="#">Services <i class="fa-solid fa-caret-down"></i></a>
-                            <ul class="submenu">
-                                <li>User <i class="fa-solid fa-angle-right"></i>
-                                    <ul class="user-menu">
-                                        <li><a href="#">Find Venue</a></li>
-                                        <li><a href="#">Book Venue</a></li>
-                                    </ul>
-                                </li>
-                                <li>Owner <i class="fa-solid fa-angle-right"></i>
-                                    <ul class="owner-menu">
-                                        <li><a href="#">Update Booking</a></li>
-                                        <li><a href="#">Register Venue</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="#">My Bookings</a></li>
                         <li><a href="#contact">Contact us</a></li>
                         <li><a href="#">Log Out</a></li>
                     </ul>
@@ -48,7 +31,7 @@
             <p>We are excited to have you here. Explore our platform to find and book amazing venues for your events.</p>
             <div class="welcome-actions">
                 <a href="venues.html" class="action-btn">Find Venues</a>
-                <a href="#" class="action-btn">View Your Bookings</a>
+                <a href="user_booking.html?name=${encodeURIComponent(userName)}" class="action-btn" id="view-bookings-btn">View Your Bookings</a>
             </div>
         </section>
     </main>
@@ -69,6 +52,10 @@
 
         // Display the user's name in the welcome message
         document.getElementById('user-name').textContent = userName;
+       
+         // Set the URL for the View Your Bookings button
+         document.getElementById('view-bookings-btn').href = `user_booking.html?name=${encodeURIComponent(userName)}`;
+
     </script>
 
 </body>

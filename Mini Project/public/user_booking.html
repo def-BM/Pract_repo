@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="icon" href="src/icon.png" type="image/x-icon">
+    <title>Eventura</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        html, body {
+            height: 100%; 
+        }
+
+        body {
+            display: flex; 
+            flex-direction: column; 
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header{
+            padding: 10px;
+            height: 10vh;
+            width: 100vw;
+            background-color: #0f1111;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo{
+            background-image: url(src/logo.png);
+            background-size: cover;
+            height: 55px;
+            width: 150px;
+        }
+        main {
+            flex: 1; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            background-image: url(src/i10.jfif);
+     
+        }
+
+        .booking-section{
+            width: 500px;
+            height: auto;
+            background-color: rgb(51, 241, 209);
+            color: black;
+            border: 2px solid white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+        }
+
+        .booking-section h1{
+            font-size: 36px;
+            text-align: center;
+        }
+
+        #create-btn{
+            width: 25%;
+            height: 25px;
+            margin: 20px;
+            background-color: rgb(243, 25, 25);
+            border: none;
+            outline: none;
+            border-radius: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-size: 13px;
+            color: #fff;
+            font-weight: 500;
+        }
+            
+
+        /* Footer */
+        .foot{
+            background-color: #0f1111;
+            color: white;
+            text-align: center;
+            padding: 3vh;
+            width: 100vw;
+        }
+        footer p {
+            font-size: 14px;
+        }
+
+        .foot-cont {
+            margin-bottom: 20px;
+        }
+
+        .foot-cont h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .foot-cont p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <div class="logo"></div>
+                        <li><a href="#">Log Out</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="booking-section">
+            <h1>Your Bookings</h1>
+            <div id="booking-info"></div> 
+            <div class="btn-container">
+                <button type="submit" id="create-btn">Cancel Booking</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="foot">
+            <div class="foot-cont" id="contact">
+                <h2>Contact us</h2>
+                <p>For inquiries or support, email us at support@eventura.com</p>
+            </div>
+            <p>Copyright &copy; all rights are reserved by Eventura.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fetch user's booking information when the page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+          const urlParams = new URLSearchParams(window.location.search);
+          const name = urlParams.get('name');
+        
+          if (name) {
+            try {
+              const response = await fetch(`/booking/${encodeURIComponent(name)}`);
+              if (!response.ok) throw new Error('Network response was not ok');
+              const bookings = await response.json();
+              displayBookings(bookings);
+            } catch (error) {
+              console.error('Error fetching booking data:', error);
+              document.getElementById('booking-info').innerText = 'Error fetching booking data';
+            }
+          }
+        });
+
+        function displayBookings(bookings) {
+          const bookingInfoDiv = document.getElementById('booking-info');
+          if (bookings.length === 0) {
+            bookingInfoDiv.innerHTML = '<p>No bookings found.</p>';
+            return;
+          }
+      
+          const bookingList = document.createElement('ul');
+          bookings.forEach(booking => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+              <strong>Name:</strong> ${booking.name} <br>
+              <strong>Venue Name:</strong> ${booking.venueName} <br>
+              <strong>Contact:</strong> ${booking.contact} <br>
+              <strong>Email:</strong> ${booking.email} <br>
+              <strong>Occasion:</strong> ${booking.occasionType} <br>
+              <strong>Event Date:</strong> ${new Date(booking.eventDate).toLocaleDateString()} <br>
+              <strong>Event Time:</strong> ${booking.eventTime} <br>
+              <strong>Guests:</strong> ${booking.guestNo} <br>
+              <strong>Booking Period:</strong> ${booking.bookingPeriod} hours
+            `;
+            bookingList.appendChild(listItem);
+          });
+          bookingInfoDiv.appendChild(bookingList);
+        }
+    </script>
+
+</body>
+</html>

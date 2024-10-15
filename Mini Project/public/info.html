@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="icon" href="src/icon.png" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="venues.css"> -->
+    <title>Venue Information</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    html, body {
+        height: 100%; 
+    }
+
+    body {
+        display: flex; 
+        flex-direction: column; 
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .header{
+        padding: 10px;
+        height: 10vh;
+        width: 100vw;
+        background-color: #0f1111;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo{
+        background-image: url(src/logo.png);
+        background-size: cover;
+        height: 55px;
+        width: 150px;
+    }
+
+    main {
+        flex: 1; 
+        display: flex; 
+        justify-content: center; 
+        /* align-items: center;  */
+    }
+
+    .box {
+        display: flex; 
+        /* justify-content: space-between; 
+        align-items: center;  */
+        margin: 20px 0;
+        border: 2px solid black;
+        border-radius: 8px;
+        height: 50vh; 
+        width: 50%; 
+        background-color: white;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+
+    /* Footer */
+    .foot{
+        background-color: #0f1111;
+        color: white;
+        text-align: center;
+        padding: 3vh;
+        height:auto;
+        width: 100vw;
+    }
+    footer p {
+        font-size: 14px;
+    }
+
+    .foot-cont {
+        margin-bottom: 20px;
+    }
+
+    .foot-cont h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .foot-cont p {
+        font-size: 16px;
+    }
+
+</style>
+<body>
+    <header>
+        <div class="header">
+            <div class="logo"></div>
+        </div>
+    </header>
+    <main>
+        <div id="venue-info"></div>
+        
+    </main>
+    <footer>
+        <div class="foot">
+            <div class="foot-cont" id="contact">
+                <h2>Contact us</h2>
+                <p>For inquiries or support, email us at support@eventura.com</p>
+            </div>
+            <p>Copyright &copy; all rights are reserved by Eventura.com</p>
+        </div>
+    </footer>
+
+    <script>
+        const venueId = new URLSearchParams(window.location.search).get('id');
+        fetch(`/venues/${venueId}`)
+          .then(response => response.json())
+          .then(venue => {
+            const venueInfo = document.getElementById('venue-info');
+            venueInfo.innerHTML = `
+              <div class="box"><img src="/${venue.venueImage.replace(/\\/g, '/')}"} alt="${venue.venueName}" /></div>
+              <h1>${venue.venueName}</h1>
+              <p><i class="fa-solid fa-location-dot"></i> ${venue.venueLocation}</p>
+              <p><i class="fa-solid fa-user-group"></i> ${venue.venueCapacity}</p>
+              <p><i class="fa-solid fa-house"></i> ${venue.venueType}</p>
+              <p><i class="fa-solid fa-phone"></i> ${venue.contact}</p>
+              <p><i class="fa-solid fa-envelope"></i> ${venue.email}</p>
+              
+            `;
+          })
+          .catch(error => console.error('Error fetching venue data:', error));
+      </script>
+    
+</body>
+</html>

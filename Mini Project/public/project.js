@@ -1,5 +1,5 @@
 // Changing image
-var images = ['src/i3.jpg', 'src/i8.jpg', 'src/i5.jpg', 'src/i7.jpg', 'src/i6.jpg', 'src/i4.jpg'];
+var images = ['src/i3.jpg', 'src/i5.jpg', 'src/i1.jpg', 'src/i4.jpg','src/h2.jpg'];
 var currentIndex = 0;
 
 function changeImage() {
@@ -10,50 +10,48 @@ function changeImage() {
 // Change image every 5 seconds
 setInterval(changeImage, 5000);
 
-// Open new page by clicking image in box
-document.addEventListener("DOMContentLoaded", function () {
+// Function to fetch and display venues
+async function fetchVenues() {
+    try {
+        const response = await fetch('/venues');
+        const venues = await response.json();
 
-    // Select all elements with the class 'box'
-    const boxes = document.querySelectorAll('.box');
+        const venueContainer = document.getElementById('venue-container');
 
-    // Loop through each box
-    boxes.forEach((box, index) => {
-        // Add a click event listener to each box
-        box.addEventListener('click', function () {
-            // Navigate to the corresponding page based on the index
-            switch (index) {
-                case 0:
-                    window.location.href = 'venues.html';
-                    break;
-                case 1:
-                    window.location.href = 'venues.html';
-                    break;
-                case 2:
-                    window.location.href = 'venues.html';
-                    break;
-                case 3:
-                    window.location.href = 'venues.html';
-                    break;
-                case 4:
-                    window.location.href = 'venues.html';
-                    break;
-                case 5:
-                    window.location.href = 'venues.html';
-                    break;
-                case 6:
-                    window.location.href = 'venues.html';
-                    break;
-                case 7:
-                    window.location.href = 'venues.html';
-                    break;
-                case 8:
-                    window.location.href = 'detail.html';
-                    break;
-                default:
-                    break;
-            }
+        venues.forEach(venue => {
+            const box = document.createElement('div');
+            box.className = 'box';
+
+            // Convert backslashes to forward slashes in the image path
+            let imageUrl = venue.venueImage.replace(/\\/g, '/');
+
+            // Use the correct image path
+            imageUrl = `/${imageUrl}`;
+
+            box.innerHTML = `
+                <div class="box-image" style="background-image: url('${imageUrl}');">
+                    <div class="rating">${'★'.repeat(venue.rating)}</div>
+                </div>
+                <h3>${venue.venueName}</h3>
+                <div class="location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p>${venue.venueLocation}</p>
+                    <span class="food">${venue.catering ? 'Catering Services:' : 'No Catering Services'}</span>
+                    ${venue.catering ? '<img src="src/veg.png" alt="veg-logo" class="veg"><img src="src/non-veg.png" alt="non-veg logo" class="non-veg">' : ''}
+                    <i class="fa-solid fa-user-group"></i>
+                    <p>${venue.venueCapacity}</p>
+                </div>
+            `;
+            venueContainer.appendChild(box);
         });
-    });
-});
+    } catch (error) {
+        console.error('Error fetching venues:', error);
+    }
+}
+
+// Call the fetch function when the page loads
+window.onload = fetchVenues;
+
+
 
 

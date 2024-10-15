@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="icon" href="src/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="welcome_css.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="welcome_css.css"> 
     <title>Eventura</title>
 </head>
 <body>
@@ -16,23 +16,6 @@
                 <nav>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="#">Services <i class="fa-solid fa-caret-down"></i></a>
-                            <ul class="submenu">
-                                <li>User <i class="fa-solid fa-angle-right"></i>
-                                    <ul class="user-menu">
-                                        <li><a href="#">Find Venue</a></li>
-                                        <li><a href="#">Book Venue</a></li>
-                                    </ul>
-                                </li>
-                                <li>Owner <i class="fa-solid fa-angle-right"></i>
-                                    <ul class="owner-menu">
-                                        <li><a href="#">Update Booking</a></li>
-                                        <li><a href="#">Register Venue</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="#">My Bookings</a></li>
                         <li><a href="#contact">Contact us</a></li>
                         <li><a href="#">Log Out</a></li>
                     </ul>
@@ -47,8 +30,7 @@
             <h2 style="color: orangered;">Venue Name: <span id="venue-name">[Venue Name]</span></h2>
             <p>Here you can manage your venues and bookings.</p>
             <div class="welcome-actions">
-                <a href="#" class="action-btn">Find Venues</a>
-                <a href="#" class="action-btn">View Your Bookings</a>
+                <a href="update_booking.html" class="action-btn">See Bookings</a>
             </div>
         </section>
     </main>

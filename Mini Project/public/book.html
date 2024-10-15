@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="src/icon.png" type="image/x-icon">
+    <title>Eventura</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        html, body {
+            height: 100%; 
+        }
+
+        body {
+            display: flex; 
+            flex-direction: column; 
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header{
+            padding: 10px;
+            height: 10vh;
+            width: 100vw;
+            background-color: #0f1111;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo{
+            background-image: url(src/logo.png);
+            background-size: cover;
+            height: 55px;
+            width: 150px;
+        }
+        main {
+            flex: 1; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            background-image: url(src/h7.JPG);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .user-form{
+            width: 500px;
+            height: auto;
+            background-color: blueviolet;
+            color: white;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+        }
+
+        .user-form h2{
+            font-size: 36px;
+            text-align: center;
+        }
+
+        .input-box{
+            position: relative;
+            width: 95%;
+            margin: 20px 10px;
+        }
+
+        .input-box label{
+            margin-left: 10px;
+            font-size: 20px;
+            display: block;
+        }
+
+        .input-box input{
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+            border: 1px solid black;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .input-box input:hover{
+            border: 2px solid black;
+        }
+
+        .btn-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-box #opt{
+            width: 40%;
+            height: 30px;
+            border-radius: 10px;
+        }
+
+        #create-btn{
+            width: 50%;
+            height: 45px;
+            margin: 20px;
+            background-color: white;
+            border: none;
+            outline: none;
+            border-radius: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-size: 24px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        #create-btn:hover{
+            border: 2px solid black;
+        }
+
+        /* Footer */
+        .foot{
+            background-color: #0f1111;
+            color: white;
+            text-align: center;
+            padding: 3vh;
+            width: 100vw;
+        }
+        footer p {
+            font-size: 14px;
+        }
+
+        .foot-cont {
+            margin-bottom: 20px;
+        }
+
+        .foot-cont h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .foot-cont p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <div class="logo"></div>
+            <div class="navbar">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Log Out</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="user-form">
+            <h2>Booking</h2>
+            <form id="booking-form" action="/book" method="POST">
+                <div class="input-box">
+                    <label for="name">Your name</label>
+                    <input type="text" name="name" id="name" placeholder="Full Name" required>
+                </div>
+                <div class="input-box">
+                    <label for="contact">Contact</label>
+                    <input type="tel" name="contact" id="contact" placeholder="10-digit contact number" pattern="[0-9]{10}" required maxlength="10">
+                </div>
+                <div class="input-box">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Email address" required>
+                </div>
+                <div class="input-box">
+                    <label for="ocassion">Choose Ocassion</label>
+                    <select id="opt" name="occasionType" required>
+                        <option>Choose Ocassion</option>
+                        <option>Wedding</option>
+                        <option>Party</option>
+                        <option >Ceremony</option>
+                        <option>Meeting</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="date">Event Date</label>
+                    <input type="date" name="eventDate" id="date" required>
+                </div>
+                <div class="input-box">
+                    <label for="time">Event Time</label>
+                    <input type="time" name="eventTime" id="time" required>
+                </div>
+                <div class="input-box">
+                    <label for="guest">Number of Guests</label>
+                    <input type="text" name="guestNo" id="guest" required>
+                </div>
+                <div class="input-box">
+                    <label for="period">Booking Period (in hours)</label>
+                    <input type="text" name="bookingPeriod" id="period" placeholder="Enter period in hours" required>
+                </div>
+                
+                <div class="btn-container">
+                    <button type="submit" id="create-btn">Book</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="foot">
+            <div class="foot-cont" id="contact">
+                <h2>Contact us</h2>
+                <p>For inquiries or support, email us at support@eventura.com</p>
+            </div>
+            <p>Copyright &copy; All rights reserved by Eventura.com</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -78,9 +78,9 @@
             border-radius: 10px;
         }
 
-        .input-box input:hover{
+        /* .input-box input:hover{
             border: 2px solid black;
-        }
+        } */
 
         #food-options {
             display: flex;
@@ -134,7 +134,7 @@
     <div class="user-form">
         <h2>Register</h2>
         
-        <form id="ownerSignupForm" action="/owner-signup" method="POST">
+        <form id="ownerSignupForm" action="/owner-signup" method="POST" enctype="multipart/form-data">
         <div class="form-grid">
         <div class="input-box">
             <label for="name">Owner name</label>
@@ -180,7 +180,7 @@
                 <label for="ocassion">Ocassion Type</label>
                 <select id="opt" name="occasionType" required>
                     <option>Ocassion type</option>
-                    <option>All</option>
+                    <option>All ocassion</option>
                     <option>Wedding</option>
                     <option>Party</option>
                     <option >Ceremony</option>
@@ -203,8 +203,18 @@
             <label for="food-veg">Veg</label>
             <input type="radio" id="food-nonveg" name="food" value="nonveg">
             <label for="food-nonveg">Non-Veg</label>
-            <input type="radio" id="food-both" name="food" value="both">
+            <input type="radio" id="food-both" name="food" value="Both">
             <label for="food-both">Both</label>
+        </div>
+
+        <div class="input-box">
+            <label for="venueImage">Upload Venue Images</label>
+            <input type="file" name="venueImage" accept="image/*" multiple required>
+        </div>
+        
+        <div class="input-box">
+            <label for="price">Booking Rate </label>
+            <input type="text" name="price" required>
         </div>
 
         <div class="input-box">
@@ -265,7 +275,7 @@
             }
 
             // Clear the form fields after submission
-            document.getElementById('ownerSignupForm').reset();
+            // document.getElementById('ownerSignupForm').reset();
         });
 
     </script>
