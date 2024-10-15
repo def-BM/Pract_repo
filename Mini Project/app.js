@@ -1,16 +1,30 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-// const session = require('express-session');
+const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
 const app = express();
 const PORT = 3000;
+// const upload = multer({ dest: "uploads/"});
 
 // Middleware for parsing form data
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public')); // Serve static files
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
+
+// Set up Multer for file upload
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Directory to save uploaded images
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${uuidv4()}-${file.originalname}`); // Unique filename
+    }
+});
+
+const upload = multer({ storage });
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/eventura')
@@ -137,8 +151,11 @@ const OwnerSchema = new mongoose.Schema({
     venueLocation: String,
     venueCapacity: String,
     venueType: String,
-    catering: String,
+    catering: Boolean,
+    food: String,
     occasionType: String,
+    venueImage: String,
+    price: String,
     password: String,
     id:{type:String, unique:true}
 });
@@ -147,10 +164,9 @@ const OwnerSchema = new mongoose.Schema({
 const Owner = mongoose.model('Owner', OwnerSchema);
 
 // Owner Signup Route
-app.post('/owner-signup', async (req, res) => {
-    console.log( req.body); 
+app.post('/owner-signup', upload.single('venueImage'), async (req, res) => {
 
-    const { name, email, contact, venueName, venueLocation, venueCapacity, venueType, catering, occasionType, password } = req.body;
+    const { name, email, contact, venueName, venueLocation, venueCapacity, venueType, catering, food, occasionType, price, password } = req.body;
 
     if (!email || !password) {
         return res.status(400).json({ message: 'Email and password are required.' });
@@ -168,7 +184,10 @@ app.post('/owner-signup', async (req, res) => {
             venueCapacity,
             venueType,
             catering,
+            food,
             occasionType,
+            venueImage: req.file ? req.file.path : null,
+            price,
             password: hashedPassword
         });
 
@@ -223,7 +242,6 @@ app.post('/owner-login', async (req, res) => {
             `);
         }
         
-        // If the password matches, redirect to the owner's dashboard or detail page
         // If the password matches, redirect to the owner's detail page
         return res.redirect(`/detail.html?name=${encodeURIComponent(owner.name)}&venueName=${encodeURIComponent(owner.venueName)}`);
 
@@ -255,6 +273,97 @@ app.get('/venues', async (req, res) => {
         res.status(500).send('Error fetching venue data');
     }
 });
+
+
+// Define Booking Schema
+const bookingSchema = new mongoose.Schema({
+    name: String,
+    contact: String,
+    email: String,
+    occasionType: String, 
+    eventDate: Date,
+    eventTime: String,
+    guestNo: Number, 
+    bookingPeriod: Number,
+    venueName: String, 
+  venueId: { type: mongoose.Schema.Types.ObjectId, ref: 'Owner' } 
+});
+
+// Create Booking model
+const Booking = mongoose.model('Booking', bookingSchema);
+
+// Route to handle booking form submission
+app.post('/book', async (req, res) => {
+    const { name, contact, email, occasionType, eventDate, eventTime, guestNo, bookingPeriod, venueName } = req.body;
+
+    const newBooking = new Booking({
+        name,
+        contact,
+        email,
+        occasionType, 
+        eventDate,
+        eventTime,
+        guestNo, 
+        bookingPeriod,
+        venueName,
+        venueId: venue._id 
+    });
+
+    try {
+        await newBooking.save();
+        res.redirect(`/welcome?name=${encodeURIComponent(name)}`);
+    } catch (err) {
+        console.error('Error saving booking:', err);
+        res.send(`
+            <script>
+                alert('Error submitting booking. Please try again.');
+                window.history.back();
+            </script>
+        `);
+    }
+});
+
+
+// Route to fetch all venues
+app.get('/venues', async (req, res) => {
+    try {
+      const venues = await Owner.find({}).select('venueName');
+      res.json(venues);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching venue data');
+    }
+  });
+
+  
+// Route to fetch booking data for a specific user
+app.get('/booking/:name', async (req, res) => {
+    try {
+      const name = req.params.name;
+      const bookings = await Booking.find({ name: name });
+      res.json(bookings);
+    } catch (error) {
+      console.error('Error fetching bookings:', error);
+      res.status(500).json({ error: 'Error fetching booking data' });
+    }
+  });
+
+
+  app.get('/booking/:userName', async (req, res) => {
+    const userName = req.params.userName;
+
+    try {
+        // Fetch bookings where the user's name matches
+        const userBookings = await Booking.find({ userName: userName }).populate('venue');
+
+        console.log(userBookings); // Log bookings in the backend to check
+        res.json(userBookings);
+    } catch (error) {
+        console.error('Error fetching user bookings:', error);
+        res.status(500).json({ error: 'Failed to fetch user bookings' });
+    }
+});
+
 
 // Start the server
 app.listen(PORT, () => {
