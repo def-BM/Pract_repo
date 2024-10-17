@@ -67,6 +67,7 @@
     left: 0;
     top: 100%;
     background-color: #008080;
+    border: 2px;
     padding: 0;
     margin: 0;
     z-index: 9999;

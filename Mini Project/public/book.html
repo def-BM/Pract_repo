@@ -42,6 +42,34 @@
             height: 55px;
             width: 150px;
         }
+       
+        .navbar ul{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .navbar ul li {
+            position: relative;
+        }
+
+        .navbar ul li a{
+            display: block;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-size: 16px;
+        } 
+
+        .navbar ul li a:hover{
+            background: blue;
+            border-radius: 5px;
+        }
+
         main {
             flex: 1; 
             display: flex; 
@@ -208,6 +236,8 @@
                     <label for="period">Booking Period (in hours)</label>
                     <input type="text" name="bookingPeriod" id="period" placeholder="Enter period in hours" required>
                 </div>
+
+                <input type="hidden" name="venueName" id="venue-name">
                 
                 <div class="btn-container">
                     <button type="submit" id="create-btn">Book</button>
@@ -226,5 +256,14 @@
         </div>
     </footer>
 
+    <script>
+        // Get the venue name from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const venueName = urlParams.get('venueName');
+      
+        // Set the venue name in the hidden input field
+        document.getElementById('venue-name').value = venueName;
+      </script>
+      
 </body>
 </html>

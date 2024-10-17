@@ -1,70 +1,13 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="welcome_css.css">
-    <link rel="icon" href="src/icon.png" type="image/x-icon">
-    <title>Eventura</title>
-</head>
-<body>
-    <header>
-        <div class="header">
-            <div class="logo"></div>
-                        <li><a href="#">Log Out</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <div class="item-box" id="bookingContainer"></div>
-    </main>
-
-    <footer>
-        <div class="foot">
-            <div class="foot-cont" id="contact">
-                <h2>Contact us</h2>
-                <p>For inquiries or support, email us at support@eventura.com</p>
-            </div>
-            <p>Copyright &copy; all rights are reserved by Eventura.com</p>
-        </div>
-    </footer>
-    <script>
-        // Get the user's name from the URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const userName = urlParams.get('name') || 'Guest'; // Default to 'Guest' if no name is provided
-
-        // Display the user's name in the welcome message
-        document.getElementById('user-name').textContent = userName;
-    </script>
-
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="welcome_css.css">
+    <link rel="stylesheet" href="updateBooking.css">
     <link rel="icon" href="src/icon.png" type="image/x-icon">
     <title>Eventura</title>
-    <style>
-        .item-box {
-            border: 1px solid #ddd;
-            padding: 20px;
-            margin: 20px;
-            width: 200px;
-            height: 200px;
-            display: inline-block;
-            background-color: blueviolet;
-            color: white;
-        }
-    </style>
+
 </head>
 <body>
     <header>
@@ -72,14 +15,30 @@
             <div class="logo"></div>
             <nav>
                 <ul>
-                    <li><a href="#">Log Out</a></li>
+                    <li><a href="index.html">Log Out</a></li>
                 </ul>
             </nav>
         </div>
     </header>
     <main>
         <div class="item-box">
-        <div id="bookingContainer"></div>
+            <table id="bookingTable">
+                <thead>
+                    <tr>
+                        <th>Booked By</th>
+                        <th>Ocassion</th>
+                        <th>Event Date</th>
+                        <th>Event Time</th>
+                        <th>Guests No.</th>
+                        <th>Booking Period (hours)</th>
+                        <th>Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Booking data will be populated here -->
+                </tbody>
+            </table>
+        <!-- <div id="bookingContainer"></div> -->
     </div>
     </main>
     <footer>
@@ -93,41 +52,49 @@
     </footer>
 
     <script>
-        // Fetch booking data from the server for this user
-fetch(`/booking/${encodeURIComponent(userName)}`)
-    .then(response => response.json())
-    .then(bookings => {
-        console.log(bookings); // Log the bookings to ensure they are fetched correctly
-        const bookingContainer = document.getElementById('bookingContainer');
-        
-        // Clear previous content
-        bookingContainer.innerHTML = '';
-        
-        // Create booking boxes dynamically based on the user's bookings
-        if (bookings.length > 0) {
-            bookings.forEach(booking => {
-                const itemBox = document.createElement('div');
-                itemBox.className = 'item-box';
-                
-                // Display booking details in the box
-                itemBox.innerHTML = `
-                    <h2>${booking.venue.venueName}</h2>
-                    <p>Event Date: ${new Date(booking.eventDate).toLocaleDateString()}</p>
-                    <p>Event Time: ${booking.eventTime}</p>
-                    <p>Guests: ${booking.guestNo}</p>
-                    <p>Booking Period: ${booking.bookingPeriod} hours</p>
+        // Get the venue owner's ID from the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const venueOwnerId = urlParams.get('venueId');
+      
+        // Fetch booking data from the server for this venue owner
+        fetch(`/booking/venue/${venueOwnerId}`)
+          .then(response => {
+            console.log('Response:', response);
+            return response.json();
+          })
+          .then(bookings => {
+            console.log('Bookings:', bookings);
+            const bookingTable = document.getElementById('bookingTable');
+      
+            if (bookings.length > 0) {
+              bookings.forEach(booking => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                  <td>${booking.name}</td>
+                  <td>${booking.occasionType}</td>
+                  <td>${new Date(booking.eventDate).toLocaleDateString()}</td>
+                  <td>${booking.eventTime}</td>
+                  <td>${booking.guestNo}</td>
+                  <td>${booking.bookingPeriod}</td>
+                  <td>${booking.contact}</td>
                 `;
-                
-                bookingContainer.appendChild(itemBox);
-            });
-        } else {
-            bookingContainer.innerHTML = '<p>No bookings found for this user.</p>';
-        }
-    })
-    .catch(error => {
-        console.error('Error fetching bookings:', error);
-    });
-
-    </script>
+                bookingTable.tBodies[0].appendChild(row);
+              });
+            } else {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <td colspan="6">No bookings found for this venue.</td>
+              `;
+              bookingTable.tBodies[0].appendChild(row);
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching bookings:', error);
+          });
+      </script>
+    
+    
+    
+    
 </body>
 </html>

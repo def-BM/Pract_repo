@@ -18,7 +18,7 @@
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="#contact">Contact us</a></li>
-                        <li><a href="#">Log Out</a></li>
+                        <li><a href="index.html">Log Out</a></li>
                     </ul>
                 </nav>
             </div>
@@ -75,7 +75,7 @@
                         <p><i class="fa-solid fa-indian-rupee-sign"></i></i> ${venue.price}</p>
 
                         <div class="btn-container">
-                            <button onclick="window.location.href='book.html'" id="book-btn">Book Now</button>
+                            <button onclick="window.location.href='book.html?venueName=${encodeURIComponent(venue.venueName)}'" id="book-btn">Book Now</button>
                         </div>
                     </div>
     

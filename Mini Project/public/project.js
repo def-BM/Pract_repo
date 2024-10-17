@@ -52,6 +52,12 @@ async function fetchVenues() {
 // Call the fetch function when the page loads
 window.onload = fetchVenues;
 
+// By clicking on box redirct to login page
+document.getElementById('venue-container').addEventListener('click', function() {
+    // Redirect to user_login.html on click
+    window.location.href = 'user_login.html';
+});
+
 
 
 

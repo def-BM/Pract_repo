@@ -243,7 +243,7 @@ app.post('/owner-login', async (req, res) => {
         }
         
         // If the password matches, redirect to the owner's detail page
-        return res.redirect(`/detail.html?name=${encodeURIComponent(owner.name)}&venueName=${encodeURIComponent(owner.venueName)}`);
+        return res.redirect(`/detail.html?name=${encodeURIComponent(owner.name)}&venueName=${encodeURIComponent(owner.venueName)}&venueId=${encodeURIComponent(owner._id)}`);
 
     } catch (err) {
         console.error(err);
@@ -286,42 +286,68 @@ const bookingSchema = new mongoose.Schema({
     guestNo: Number, 
     bookingPeriod: Number,
     venueName: String, 
-  venueId: { type: mongoose.Schema.Types.ObjectId, ref: 'Owner' } 
+    venueId: { type: mongoose.Schema.Types.ObjectId, ref: 'Owner' } 
 });
 
 // Create Booking model
 const Booking = mongoose.model('Booking', bookingSchema);
 
+
 // Route to handle booking form submission
+
 app.post('/book', async (req, res) => {
     const { name, contact, email, occasionType, eventDate, eventTime, guestNo, bookingPeriod, venueName } = req.body;
-
-    const newBooking = new Booking({
+  
+    // Check if venueName is present
+    if (!venueName) {
+      return res.send(` 
+        <script> 
+          alert('Venue not selected!'); 
+          window.history.back(); 
+        </script> 
+      `);
+    }
+  
+    try {
+      // Find the venue by name
+      const venue = await Owner.findOne({ venueName });
+  
+      if (!venue) {
+        return res.send(` 
+          <script> 
+            alert('Venue not found!'); 
+            window.history.back(); 
+          </script> 
+        `);
+      }
+  
+      // Create a new booking document
+      const newBooking = new Booking({
         name,
         contact,
         email,
-        occasionType, 
+        occasionType,
         eventDate,
         eventTime,
-        guestNo, 
+        guestNo,
         bookingPeriod,
         venueName,
-        venueId: venue._id 
-    });
-
-    try {
-        await newBooking.save();
-        res.redirect(`/welcome?name=${encodeURIComponent(name)}`);
+        venueId: venue._id,
+      });
+  
+      await newBooking.save();
+  
+      res.redirect(`/welcome?name=${encodeURIComponent(name)}`);
     } catch (err) {
-        console.error('Error saving booking:', err);
-        res.send(`
-            <script>
-                alert('Error submitting booking. Please try again.');
-                window.history.back();
-            </script>
-        `);
+      console.error('Error saving booking:', err);
+      res.send(` 
+        <script> 
+          alert('Error submitting booking. Please try again.'); 
+          window.history.back(); 
+        </script> 
+      `);
     }
-});
+  });
 
 
 // Route to fetch all venues
@@ -349,20 +375,17 @@ app.get('/booking/:name', async (req, res) => {
   });
 
 
-  app.get('/booking/:userName', async (req, res) => {
-    const userName = req.params.userName;
-
+  // Route to get booking information using venueId (ObjectId)
+app.get('/booking/venue/:venueId', async (req, res) => {
     try {
-        // Fetch bookings where the user's name matches
-        const userBookings = await Booking.find({ userName: userName }).populate('venue');
-
-        console.log(userBookings); // Log bookings in the backend to check
-        res.json(userBookings);
-    } catch (error) {
-        console.error('Error fetching user bookings:', error);
-        res.status(500).json({ error: 'Failed to fetch user bookings' });
+      const venueId = req.params.venueId;
+      const bookings = await Booking.find({ venueId: venueId });
+      res.json(bookings);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching booking data');
     }
-});
+  });
 
 
 // Start the server

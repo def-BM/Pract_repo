@@ -17,7 +17,7 @@
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="#contact">Contact us</a></li>
-                        <li><a href="#">Log Out</a></li>
+                        <li><a href="index.html">Log Out</a></li>
                     </ul>
                 </nav>
             </div>
@@ -30,7 +30,7 @@
             <h2 style="color: orangered;">Venue Name: <span id="venue-name">[Venue Name]</span></h2>
             <p>Here you can manage your venues and bookings.</p>
             <div class="welcome-actions">
-                <a href="update_booking.html" class="action-btn">See Bookings</a>
+                <a id="see-bookings-link" href="#" class="action-btn">See Bookings</a>
             </div>
         </section>
     </main>
@@ -50,10 +50,19 @@
         const urlParams = new URLSearchParams(window.location.search);
         const ownerName = urlParams.get('name') || 'Owner';
         const venueName = urlParams.get('venueName') || 'No Venue';
+        const venueId = urlParams.get('venueId') || '';
 
         // Display the owner's name
         document.getElementById('owner-name').textContent = ownerName;
         document.getElementById('venue-name').textContent = venueName;
+        
+        // Dynamically update the href of the "See Bookings" link with the venue ID
+    const seeBookingsLink = document.getElementById('see-bookings-link');
+    if (venueId) {
+        seeBookingsLink.href = `update_booking.html?venueId=${venueId}`;
+    } else {
+        seeBookingsLink.href = '#'; // Fallback in case venueId is missing
+    }
     </script>
 </body>
 </html>

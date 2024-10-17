@@ -1,0 +1,180 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html, body {
+    height: 100%; /* Change made: Set html and body height to 100% */
+}
+
+body {
+    display: flex; /* Change made: Enable flexbox on body */
+    flex-direction: column; /* Change made: Stack children vertically */
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.header{
+    padding: 10px;
+    height: 10vh;
+    width: 100vw;
+    background-color: #0f1111;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo{
+    background-image: url(src/logo.png);
+    background-size: cover;
+    height: 55px;
+    width: 150px;
+    /* left: 0; */
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+ul li {
+    position: relative;
+}
+ul li a{
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+} 
+
+ul li a:hover{
+    background: blue;
+    border-radius: 5px;
+}
+
+
+/* Main Section */
+main {
+    flex: 1; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    /* background-image: url(src/i5.jpg); */
+}
+
+.welcome-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: white;
+    margin: 20px auto;
+    max-width: 900px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 100%;
+}
+
+.welcome-section h1 {
+    font-size: 48px;
+    color: #ff6f61;
+    margin-bottom: 20px;
+}
+
+.welcome-section h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.welcome-section p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.welcome-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.action-btn {
+    padding: 12px 25px;
+    background-color: rgb(95, 191, 11);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background 0.3s ease;
+    text-decoration: none;
+}
+
+.action-btn:hover {
+    border: 2px solid rgb(95, 191, 11) ;
+    /* background-color: rgb(95, 191, 11); */
+}
+
+/* Footer */
+.foot{
+    background-color: #0f1111;
+    color: white;
+    text-align: center;
+    padding: 3vh;
+    height:auto;
+    width: 100vw;
+}
+footer p {
+    font-size: 14px;
+}
+
+.foot-cont {
+    margin-bottom: 20px;
+}
+
+.foot-cont h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.foot-cont p {
+    font-size: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures the borders between cells are collapsed */
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: #333;
+}
+
+table th, table td {
+    border: 1px solid #ddd; /* Apply border to both headers and data cells */
+    padding: 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.item-box {
+    padding: 20px;
+    margin: 20px;
+    background-color: #4CAF50;
+    color: white;
+}
